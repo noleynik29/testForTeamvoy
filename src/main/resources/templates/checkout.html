@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <script>
+        var countdown;
+        var timer = 600; // 10 minutes in seconds
+
+        function startCountdown() {
+            countdown = setInterval(function() {
+                if (timer <= 0) {
+                    clearInterval(countdown);
+                    alert("Order has been deleted due to inactivity.");
+                } else {
+                    var minutes = Math.floor(timer / 60);
+                    var seconds = timer % 60;
+                    document.getElementById("timer").innerText = minutes + "m " + seconds + "s";
+                    timer--;
+                }
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(countdown);
+        }
+    </script>
+</head>
+<body>
+<h2>Checkout</h2>
+
+<form th:object="${order}" th:action="@{'/pay/' + ${order.id}}" method="post">
+  <h3>Order ID: <span th:text="${order.getId()}"></span></h3>
+
+  <h3>Timer: <span id="timer">10m 0s</span></h3>
+
+  <button type="submit" onclick="stopCountdown()">Pay</button>
+</form>
+
+<a href="/cart">Back to Cart</a>
+
+<script>
+    startCountdown();
+</script>
+</body>
+</html>

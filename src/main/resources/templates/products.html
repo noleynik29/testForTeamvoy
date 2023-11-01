@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+</head>
+<body>
+<h2>Product List</h2>
+<a th:href="@{'/addProduct'}">Add product (for admins)</a>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through the list of products -->
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}">Product Name</td>
+        <td th:text="${product.price}">Product Price</td>
+        <td th:text="${product.quantity}">Product Quantity</td>
+        <td>
+            <form th:action="@{'/add-to-cart/' + ${product.id}}" method="post">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{'/cart'}">View Cart</a>
+<a href="/logout">Logout</a>
+</body>
+</html>
